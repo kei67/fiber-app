@@ -10,7 +10,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func main() {
+// SetupApp configures routes and returns a Fiber application instance.
+func SetupApp() *fiber.App {
 	app := fiber.New()
 
 	app.Use(prometheus.PrometheusMiddleware())
@@ -26,5 +27,10 @@ func main() {
 
 	app.Get("/metrics", prometheus.NewMetricsHandler())
 
+	return app
+}
+
+func main() {
+	app := SetupApp()
 	log.Fatal(app.Listen(":3000"))
 }
